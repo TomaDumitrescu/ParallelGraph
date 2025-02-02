@@ -134,17 +134,7 @@ int main(int argc, char *argv[])
     wait_for_completion(tp);
     destroy_threadpool(tp);
 
-    /* Print the final sum without a trailing newline using write() */
-    char buf[32];
-    int len = snprintf(buf, sizeof(buf), "%d", sum);
-    if (len < 0) {
-        perror("snprintf");
-        exit(EXIT_FAILURE);
-    }
-    if (write(STDOUT_FILENO, buf, len) < 0) {
-        perror("write");
-        exit(EXIT_FAILURE);
-    }
+    printf("%d", sum);
 
     return 0;
 }
