@@ -5,6 +5,7 @@
 
 #include <pthread.h>
 #include "os_list.h"
+#include <stdbool.h>
 
 typedef struct {
 	void *argument;
@@ -18,15 +19,21 @@ typedef struct os_threadpool {
 	pthread_t *threads;
 
 	/*
-	 * Head of queue used to store tasks.
-	 * First item is head.next, if head.next != head (i.e. if queue
-	 * is not empty).
-	 * Last item is head.prev, if head.prev != head (i.e. if queue
-	 * is not empty).
-	 */
+	* Head of queue used to store tasks.
+	* First item is head.next, if head.next != head (i.e. if queue
+	* is not empty).
+	* Last item is head.prev, if head.prev != head (i.e. if queue
+	* is not empty).
+	*/
 	os_list_node_t head;
 
-	/* TODO: Define threapool / queue synchronization data. */
+	/* Define threapool / queue synchronization data. */
+	pthread_mutex_t mutex;
+	pthread_cond_t condition;
+
+	bool work_done;
+	int ready;
+	int running;
 } os_threadpool_t;
 
 os_task_t *create_task(void (*f)(void *), void *arg, void (*destroy_arg)(void *));
