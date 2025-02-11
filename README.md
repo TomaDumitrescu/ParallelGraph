@@ -26,5 +26,6 @@ changes the flag work_done, then joins the threads; create_threadpool(...) which
 add it to the global sum (using a mutex) and mark it as DONE. Then, traverse its neighbors and process every neighbor that
 was not visited in the same manner as node 0 was.
 
+
 ## Notes:
 https://en.wikipedia.org/wiki/Thread_pool
